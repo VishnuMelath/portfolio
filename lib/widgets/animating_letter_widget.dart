@@ -23,19 +23,15 @@ class _AnimatingLetterWidgetState extends State<AnimatingLetterWidget>
     letter = widget.letter;
     controller = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 'e'.codeUnitAt(0) * 20),
+        duration: Duration(milliseconds: letter.codeUnitAt(0) * 20),
         animationBehavior: AnimationBehavior.normal);
     animation = IntTween(begin: 65, end: letter.codeUnitAt(0)).animate(
-        controller
-          ..duration = Duration(milliseconds: letter.codeUnitAt(0) * 20));
-    // animation.addStatusListener(
-    //   (status) {
-    //     status.isCompleted?animationnotifier.value=true:false;
-    //   },
-    // );
+        CurvedAnimation(
+            parent: controller,
+            curve: const Interval(0, 1, curve: Curves.decelerate)));
+
     controller.addStatusListener(
       (status) {
-
         status.isCompleted ? animationnotifier.value = true : false;
       },
     );

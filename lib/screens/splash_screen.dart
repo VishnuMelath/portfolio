@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:portfolio/screens/homepage.dart';
+import 'package:portfolio/utils/animated_routing.dart';
 import 'package:portfolio/widgets/animating_letter_widget.dart';
+import 'package:portfolio/widgets/custom_scaffold.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -10,8 +13,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ValueNotifier<bool> visible = ValueNotifier(false);
     int timer=0;
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 5, 52, 90),
+    return customScaffold(
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -51,9 +53,16 @@ class SplashScreen extends StatelessWidget {
             Timer(Duration(milliseconds: timer),() {
               visible.value=true;
             }, );
-            return Visibility(child: ElevatedButton(onPressed: () {
-              
-            }, child:const Text('show more')));
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Visibility(
+                visible: value,
+                child: TextButton(
+                  style: const ButtonStyle(),
+                  onPressed: () {
+                Navigator.push(context, createRoute(const Homepage()));
+              }, child:const Text('let\'s go'))),
+            );
             },)
           ],
         ),
